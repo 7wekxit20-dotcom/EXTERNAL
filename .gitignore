@@ -1,0 +1,7 @@
+build/
+*.xcarchive
+*.ipa
+DerivedData/
+*.xcuserdata
+.DS_Store
+__MACOSX/

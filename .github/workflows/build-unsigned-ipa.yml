@@ -1,0 +1,122 @@
+name: Build unsigned IPA
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_url:
+        description: Temporary HTTPS URL for the prepared project ZIP
+        required: true
+        type: string
+      source_sha256:
+        description: SHA-256 checksum of the project ZIP
+        required: true
+        type: string
+      bundle_id:
+        description: Target bundle identifier
+        required: true
+        type: string
+      project_name:
+        description: Output IPA name
+        required: true
+        type: string
+      scheme:
+        description: Optional Xcode scheme; auto-detected when empty
+        required: false
+        default: ''
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: macos-15
+    timeout-minutes: 30
+    steps:
+      - name: Download prepared project
+        env:
+          SOURCE_URL: ${{ inputs.source_url }}
+          SOURCE_SHA256: ${{ inputs.source_sha256 }}
+        run: |
+          set -euo pipefail
+          curl --fail --location --retry 3 --connect-timeout 20 "$SOURCE_URL" -o "$RUNNER_TEMP/project.zip"
+          printf '%s  %s\n' "$SOURCE_SHA256" "$RUNNER_TEMP/project.zip" | shasum -a 256 -c -
+          mkdir -p "$RUNNER_TEMP/project"
+          ditto -x -k "$RUNNER_TEMP/project.zip" "$RUNNER_TEMP/project"
+
+      - name: Locate Xcode project
+        id: locate
+        env:
+          INPUT_SCHEME: ${{ inputs.scheme }}
+        run: |
+          set -euo pipefail
+          ROOT="$RUNNER_TEMP/project"
+          PROJECT=$(find "$ROOT" -name '*.xcodeproj' -type d | head -1 || true)
+          WORKSPACE=$(find "$ROOT" -name '*.xcworkspace' -type d | grep -v '/Pods/' | head -1 || true)
+          if [ -z "$PROJECT" ] && [ -z "$WORKSPACE" ]; then
+            echo 'No .xcodeproj or .xcworkspace found in uploaded project.' >&2
+            exit 1
+          fi
+          if [ -n "$INPUT_SCHEME" ]; then
+            SCHEME="$INPUT_SCHEME"
+          elif [ -n "$WORKSPACE" ]; then
+            SCHEME=$(xcodebuild -list -json -workspace "$WORKSPACE" | /usr/bin/python3 -c 'import json,sys; d=json.load(sys.stdin); print((d.get("workspace",{}).get("schemes") or [""])[0])')
+          else
+            SCHEME=$(xcodebuild -list -json -project "$PROJECT" | /usr/bin/python3 -c 'import json,sys; d=json.load(sys.stdin); print((d.get("project",{}).get("schemes") or [""])[0])')
+          fi
+          [ -n "$SCHEME" ] || { echo 'No Xcode scheme found.' >&2; exit 1; }
+          echo "project=$PROJECT" >> "$GITHUB_OUTPUT"
+          echo "workspace=$WORKSPACE" >> "$GITHUB_OUTPUT"
+          echo "scheme=$SCHEME" >> "$GITHUB_OUTPUT"
+          echo "Using scheme: $SCHEME"
+
+      - name: Build unsigned archive
+        env:
+          PROJECT: ${{ steps.locate.outputs.project }}
+          WORKSPACE: ${{ steps.locate.outputs.workspace }}
+          SCHEME: ${{ steps.locate.outputs.scheme }}
+          BUNDLE_ID: ${{ inputs.bundle_id }}
+        run: |
+          set -euo pipefail
+          ARCHIVE="$RUNNER_TEMP/App.xcarchive"
+          if [ -n "$WORKSPACE" ]; then
+            xcodebuild archive -workspace "$WORKSPACE" -scheme "$SCHEME" -sdk iphoneos -configuration Release -archivePath "$ARCHIVE" CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY='' PRODUCT_BUNDLE_IDENTIFIER="$BUNDLE_ID"
+          else
+            xcodebuild archive -project "$PROJECT" -scheme "$SCHEME" -sdk iphoneos -configuration Release -archivePath "$ARCHIVE" CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY='' PRODUCT_BUNDLE_IDENTIFIER="$BUNDLE_ID"
+          fi
+
+      - name: Package IPA
+        env:
+          IPA_NAME: ${{ inputs.project_name }}
+        run: |
+          set -euo pipefail
+          APP_PATH=$(find "$RUNNER_TEMP/App.xcarchive/Products/Applications" -maxdepth 1 -name '*.app' -type d | head -1)
+          [ -n "$APP_PATH" ]
+          mkdir -p "$RUNNER_TEMP/Payload"
+          cp -R "$APP_PATH" "$RUNNER_TEMP/Payload/"
+          ditto -c -k --sequesterRsrc --keepParent "$RUNNER_TEMP/Payload" "$RUNNER_TEMP/${IPA_NAME}.ipa"
+          test -s "$RUNNER_TEMP/${IPA_NAME}.ipa"
+
+      - name: Upload unsigned IPA artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ inputs.project_name }}-unsigned-ipa
+          path: ${{ runner.temp }}/${{ inputs.project_name }}.ipa
+          retention-days: 1
+
+      - name: Upload build log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ inputs.project_name }}-build-log
+          path: ${{ runner.temp }}/**/*.log
+          if-no-files-found: ignore
+          retention-days: 1
+
+      - name: Write build summary
+        if: always()
+        run: |
+          echo "### IPA build" >> "$GITHUB_STEP_SUMMARY"
+          echo "Project: ${{ inputs.project_name }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "Bundle ID: ${{ inputs.bundle_id }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "Signing: disabled" >> "$GITHUB_STEP_SUMMARY"

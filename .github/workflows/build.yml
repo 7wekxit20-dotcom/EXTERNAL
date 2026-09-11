@@ -1,0 +1,18 @@
+name: Build HYper key-enabled IPA
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: maxim-lobanov/setup-xcode@v1
+        with: { xcode-version: latest-stable }
+      - run: ./build_unsigned.sh
+      - run: ./build_esign_ready_ipa.sh build/HYper-Regedit-Key-Enabled-unsigned.ipa
+      - uses: actions/upload-artifact@v4
+        with:
+          name: HYper-Regedit-Key-Enabled-unsigned-ipa
+          path: build/HYper-Regedit-Key-Enabled-unsigned.ipa
