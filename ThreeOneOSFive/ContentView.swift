@@ -58,7 +58,7 @@ struct ContentView: View {
     private var brandHeader: some View {
         HStack(spacing: 14) {
             VStack(alignment: .leading, spacing: 3) {
-                Text("OGIOS")
+                Text("MOU7I EXTERNAL")
                     .font(.system(size: 25, weight: .black, design: .rounded))
                     .tracking(3)
                     .foregroundStyle(.white)
@@ -108,13 +108,13 @@ struct ContentView: View {
             }
 
             LazyVGrid(columns: [GridItem(.flexible(), spacing: 12), GridItem(.flexible(), spacing: 12)], spacing: 12) {
-                patchCard(name: "Aim Drag", target: "FREE FIRE • NORMAL", package: "OGIOS File (6).3105", color: AppTheme.accent, state: $aimDragEnabled)
-                patchCard(name: "Aim Neck", target: "FREE FIRE • NORMAL", package: "OGIOS File (7).3105", color: AppTheme.secondaryAccent, state: $aimNeckEnabled)
-                patchCard(name: "Antenna", target: "FREE FIRE • NORMAL", package: "OGIOS File (8).3105", color: AppTheme.secondaryAccent, state: $hspeitoffEnabled)
-                patchCard(name: "144 FPS", target: "FREE FIRE • NORMAL", package: "OGIOS File (10).3105", color: AppTheme.secondaryAccent, state: $hyperBalamagicaEnabled)
-                patchCard(name: "Aim Body", target: "FREE FIRE • NORMAL", package: "OGIOS File (12).3105", color: AppTheme.accent, state: $aimBodyPackageEnabled)
-                patchCard(name: "Aim Chest", target: "FREE FIRE • NORMAL", package: "OGIOS File (2).3105", color: AppTheme.secondaryAccent, state: $aimChestPackageEnabled)
-                patchCard(name: "Magic", target: "FREE FIRE • NORMAL", package: "OGIOS File (14).3105", color: AppTheme.accent, state: $magicEnabled)
+                patchCard(name: "Aim Drag", target: "FREE FIRE • NORMAL", package: "MOU7I EXTERNAL File (6).3105", color: AppTheme.accent, state: $aimDragEnabled)
+                patchCard(name: "Aim Neck", target: "FREE FIRE • NORMAL", package: "MOU7I EXTERNAL File (7).3105", color: AppTheme.secondaryAccent, state: $aimNeckEnabled)
+                patchCard(name: "Antenna", target: "FREE FIRE • NORMAL", package: "MOU7I EXTERNAL File (8).3105", color: AppTheme.secondaryAccent, state: $hspeitoffEnabled)
+                patchCard(name: "144 FPS", target: "FREE FIRE • NORMAL", package: "MOU7I EXTERNAL File (10).3105", color: AppTheme.secondaryAccent, state: $hyperBalamagicaEnabled)
+                patchCard(name: "Aim Body", target: "FREE FIRE • NORMAL", package: "MOU7I EXTERNAL File (12).3105", color: AppTheme.accent, state: $aimBodyPackageEnabled)
+                patchCard(name: "Aim Chest", target: "FREE FIRE • NORMAL", package: "MOU7I EXTERNAL File (2).3105", color: AppTheme.secondaryAccent, state: $aimChestPackageEnabled)
+                patchCard(name: "Magic", target: "FREE FIRE • NORMAL", package: "MOU7I EXTERNAL File (14).3105", color: AppTheme.accent, state: $magicEnabled)
             }
 
             HStack(spacing: 8) {
@@ -208,7 +208,7 @@ struct ContentView: View {
                 .tracking(1.2)
                 .foregroundStyle(.white.opacity(0.72))
             Spacer()
-            Text("OGIOS • PRONTO")
+            Text("MOU7I EXTERNAL • PRONTO")
                 .font(.system(size: 9, weight: .bold, design: .rounded))
                 .foregroundStyle(AppTheme.accent.opacity(0.8))
         }
@@ -220,7 +220,7 @@ struct ContentView: View {
 
     private var developerCredits: some View {
         VStack(spacing: 10) {
-            Text("Developed by OGIOS")
+            Text("Developed by MOU7I EXTERNAL")
                 .font(.system(size: 11, weight: .bold, design: .rounded))
                 .foregroundStyle(.white.opacity(0.72))
                 .multilineTextAlignment(.center)
@@ -230,7 +230,7 @@ struct ContentView: View {
                 .foregroundStyle(AppTheme.secondaryAccent.opacity(0.85))
 
             HStack(spacing: 10) {
-                channelButton(title: "OGIOS Telegram", url: "https://t.me/ogios1")
+                channelButton(title: "MOU7I EXTERNAL Telegram", url: "https://t.me/ogios1")
             }
         }
         .frame(maxWidth: .infinity)
@@ -272,13 +272,13 @@ struct ContentView: View {
     }
 
     private func syncPatchStates() {
-        aimDragEnabled = isPatchActive("OGIOS File (6).3105")
-        aimNeckEnabled = isPatchActive("OGIOS File (7).3105")
-        hspeitoffEnabled = isPatchActive("OGIOS File (8).3105")
-        hyperBalamagicaEnabled = isPatchActive("OGIOS File (10).3105")
-        aimBodyPackageEnabled = isPatchActive("OGIOS File (12).3105")
-        aimChestPackageEnabled = isPatchActive("OGIOS File (2).3105")
-        magicEnabled = isPatchActive("OGIOS File (14).3105")
+        aimDragEnabled = isPatchActive("MOU7I EXTERNAL File (6).3105")
+        aimNeckEnabled = isPatchActive("MOU7I EXTERNAL File (7).3105")
+        hspeitoffEnabled = isPatchActive("MOU7I EXTERNAL File (8).3105")
+        hyperBalamagicaEnabled = isPatchActive("MOU7I EXTERNAL File (10).3105")
+        aimBodyPackageEnabled = isPatchActive("MOU7I EXTERNAL File (12).3105")
+        aimChestPackageEnabled = isPatchActive("MOU7I EXTERNAL File (2).3105")
+        magicEnabled = isPatchActive("MOU7I EXTERNAL File (14).3105")
     }
 
     private func isPatchActive(_ packageFilename: String) -> Bool {
@@ -294,13 +294,13 @@ struct ContentView: View {
 
     private func setPatchState(for packageFilename: String, enabled: Bool) {
         switch packageFilename {
-        case "OGIOS File (6).3105": aimDragEnabled = enabled
-        case "OGIOS File (7).3105": aimNeckEnabled = enabled
-        case "OGIOS File (8).3105": hspeitoffEnabled = enabled
-        case "OGIOS File (10).3105": hyperBalamagicaEnabled = enabled
-        case "OGIOS File (12).3105": aimBodyPackageEnabled = enabled
-        case "OGIOS File (2).3105": aimChestPackageEnabled = enabled
-        case "OGIOS File (14).3105": magicEnabled = enabled
+        case "MOU7I EXTERNAL File (6).3105": aimDragEnabled = enabled
+        case "MOU7I EXTERNAL File (7).3105": aimNeckEnabled = enabled
+        case "MOU7I EXTERNAL File (8).3105": hspeitoffEnabled = enabled
+        case "MOU7I EXTERNAL File (10).3105": hyperBalamagicaEnabled = enabled
+        case "MOU7I EXTERNAL File (12).3105": aimBodyPackageEnabled = enabled
+        case "MOU7I EXTERNAL File (2).3105": aimChestPackageEnabled = enabled
+        case "MOU7I EXTERNAL File (14).3105": magicEnabled = enabled
         default: break
         }
     }
@@ -468,7 +468,7 @@ private struct PatchUnlockPrompt: View {
                             .foregroundStyle(.red)
                     }
                 } footer: {
-                    Text("Enter the password once to unlock this OGIOS package on this device.")
+                    Text("Enter the password once to unlock this MOU7I EXTERNAL package on this device.")
                 }
             }
             .navigationTitle("Unlock package")

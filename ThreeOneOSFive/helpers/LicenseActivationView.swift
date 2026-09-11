@@ -19,7 +19,7 @@ struct LicenseActivationView: View {
                         VStack(spacing: 0) {
                             Spacer(minLength: 42)
 
-                            Text("OGIOS")
+                            Text("MOU7I EXTERNAL")
                                 .font(.system(size: 30, weight: .black, design: .rounded))
                                 .tracking(1.4)
                                 .foregroundStyle(.white)
@@ -29,7 +29,7 @@ struct LicenseActivationView: View {
                                 .foregroundStyle(.white.opacity(0.55))
                                 .padding(.top, 5)
 
-                            Text("Package: OGIOS")
+                            Text("Package: MOU7I EXTERNAL")
                                 .font(.system(size: 12, weight: .bold, design: .rounded))
                                 .foregroundStyle(AppTheme.secondaryAccent.opacity(0.9))
                                 .padding(.top, 8)
@@ -45,7 +45,7 @@ struct LicenseActivationView: View {
                                     Spacer()
                                 }
 
-                                Text("Enter your OGIOS license key to continue")
+                                Text("Enter your MOU7I EXTERNAL license key to continue")
                                     .font(.system(size: 13, weight: .medium, design: .rounded))
                                     .foregroundStyle(.white.opacity(0.68))
                                     .frame(maxWidth: .infinity, alignment: .leading)

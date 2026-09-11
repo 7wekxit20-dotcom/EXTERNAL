@@ -1,6 +1,6 @@
 //
 //  AntiDetection.m
-//  OGIOS
+//  MOU7I EXTERNAL
 //
 //  Prevents the app from being flagged as jailbroken by common
 //  jailbreak-detection checks. Safe because the app never forks.

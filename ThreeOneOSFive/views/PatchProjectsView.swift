@@ -3,7 +3,7 @@ import UIKit
 import UniformTypeIdentifiers
 
 private enum PatchPackagePickerPolicy {
-    static let packageType = UTType(filenameExtension: "OGIOS") ?? .data
+    static let packageType = UTType(filenameExtension: "MOU7I EXTERNAL") ?? .data
     static let allowedContentTypes: [UTType] = [packageType, .data]
     static let copiesSelectedDocument = true
 }

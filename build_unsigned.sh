@@ -12,7 +12,7 @@ command -v xcodebuild >/dev/null || { echo 'xcodebuild is required on macOS' >&2
 
 xcodebuild \
   -project "$ROOT/ThreeOneOSFive.xcodeproj" \
-  -scheme OGIOS \
+  -scheme "MOU7I EXTERNAL" \
   -configuration Release \
   -sdk iphoneos \
   -archivePath "$ARCHIVE" \
@@ -21,7 +21,7 @@ xcodebuild \
   CODE_SIGN_IDENTITY='' \
   archive
 
-APP="$ARCHIVE/Products/Applications/OGIOS.app"
+APP="$ARCHIVE/Products/Applications/MOU7I.app"
 test -d "$APP"
 PATCH_DIR="$APP/Patches"
 mkdir -p "$PATCH_DIR"
@@ -30,7 +30,7 @@ for package in "$APP"/*.3105; do
   mv "$package" "$PATCH_DIR/"
 done
 
-/usr/libexec/PlistBuddy -c "Set :CFBundleExecutable OGIOS" "$APP/Info.plist" || true
+/usr/libexec/PlistBuddy -c "Set :CFBundleExecutable MOU7I" "$APP/Info.plist" || true
 /usr/libexec/PlistBuddy -c "Set :CFBundlePackageType APPL" "$APP/Info.plist" || true
 mkdir -p "$BUILD_DIR/Payload"
 cp -R "$APP" "$BUILD_DIR/Payload/"

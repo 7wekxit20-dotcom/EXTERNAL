@@ -5,8 +5,8 @@ import Security
 @MainActor
 final class LicenseManager: ObservableObject {
     // === CONFIGURE YOUR HOST HERE ===
-    static let apiURL = "https://ogios-key-server.onrender.com/api/verify" // e.g. https://ogios-keys.onrender.com/api/verify or http://YOUR_VPS:5000/api/verify
-    static let legacyKey = "OGIOS" // kept for offline fallback, remove if you want pure API
+    static let apiURL = "https://mou7i-external-key-server.onrender.com/api/verify" // e.g. https://mou7i-external-key-server.onrender.com/api/verify or http://YOUR_VPS:5000/api/verify
+    static let legacyKey = "MOU7I" // kept for offline fallback, remove if you want pure API
     // =================================
 
     @Published private(set) var expirationDate: Date?
@@ -16,7 +16,7 @@ final class LicenseManager: ObservableObject {
     @Published private(set) var contactOwner: String?
     @Published var rememberKey = true
 
-    private let service = "com.OGIOS.external-ios.activation"
+    private let service = "com.mou7i.external.activation"
     private let keyAccount = "license-key"
     private var lastAttemptAt: Date?
 
@@ -66,7 +66,7 @@ final class LicenseManager: ObservableObject {
                 guard let self else { return }
                 self.isBusy = false
                 if let error = error {
-                    // offline fallback: allow legacy OGIOS key without network
+                    // offline fallback: allow legacy MOU7I EXTERNAL key without network
                     if trimmed == Self.legacyKey {
                         if self.rememberKey { self.save(trimmed, for: self.keyAccount) }
                         self.isActive = true; self.message = "Activated (offline)"

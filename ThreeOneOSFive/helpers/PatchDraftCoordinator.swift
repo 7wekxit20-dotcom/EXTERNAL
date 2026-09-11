@@ -17,7 +17,7 @@ enum PatchImportRoute {
 
     static func resolve(_ incomingURL: URL) -> PatchImportSource {
         if incomingURL.isFileURL {
-            return incomingURL.pathExtension.lowercased() == "OGIOS"
+            return incomingURL.pathExtension.lowercased() == "MOU7I EXTERNAL"
                 ? .file(incomingURL)
                 : .invalid
         }

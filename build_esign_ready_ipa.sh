@@ -14,7 +14,7 @@ if [[ ! -f "$IPA" ]]; then
   "$ROOT/build_unsigned.sh"
 fi
 
-WORK_DIR="$(mktemp -d "${TMPDIR:-/tmp}/OGIOS-esign.XXXXXX")"
+WORK_DIR="$(mktemp -d "${TMPDIR:-/tmp}/MOU7I-esign.XXXXXX")"
 trap 'rm -rf "$WORK_DIR"' EXIT
 
 unzip -q "$IPA" -d "$WORK_DIR/unpacked"
@@ -32,8 +32,8 @@ if [[ -e "$APP/embedded.mobileprovision" || -e "$APP/_CodeSignature" ]]; then
   exit 1
 fi
 
-if [[ ! -x "$APP/OGIOS" ]]; then
-  echo "Error: expected original executable OGIOS was not found in the app bundle." >&2
+if [[ ! -x "$APP/MOU7I" ]]; then
+  echo "Error: expected original executable MOU7I was not found in the app bundle." >&2
   exit 1
 fi
 

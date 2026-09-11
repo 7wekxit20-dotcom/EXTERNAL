@@ -182,7 +182,7 @@ struct WallpaperLabView: View {
 
     private var resetSection: some View {
         Section {
-            LabeledContent(language.text("wallpaper.installed_by_OGIOS")) {
+            LabeledContent(language.text("wallpaper.installed_by_MOU7I EXTERNAL")) {
                 Text("\(activeReceipts.reduce(0) { $0 + $1.installedDescriptors.count })")
                     .monospacedDigit()
             }
@@ -487,7 +487,7 @@ struct WallpaperLabView: View {
 #if targetEnvironment(simulator)
         if ProcessInfo.processInfo.arguments.contains("--simulate-wallpaper-data") {
             let root = FileManager.default.temporaryDirectory.appendingPathComponent(
-                "OGIOS-Simulated-PosterBoard",
+                "MOU7I EXTERNAL-Simulated-PosterBoard",
                 isDirectory: true
             )
             let descriptors = root.appendingPathComponent(

@@ -12,7 +12,7 @@ struct SettingsView: View {
                 Section {
                     HStack(spacing: 14) {
                         VStack(alignment: .leading, spacing: 3) {
-                            Text("OGIOS").font(.headline)
+                            Text("MOU7I EXTERNAL").font(.headline)
                             Text(language.text("common.version", appVersion))
                                 .font(.subheadline)
                                 .foregroundStyle(.secondary)
